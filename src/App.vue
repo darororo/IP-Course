@@ -93,8 +93,8 @@ export default {
           radiusColor: '#AAAAAA',
         },
         {
-          label: 'Snack' ,
-          imgSrc: './src/assets/img/snack.png' ,
+          label: 'Cake & Milk' ,
+          imgSrc: './src/assets/img/cake.png' ,
           quantity: this.getQuantity(),
           bgColor: '#FFF3EB',
           radiusColor: '#f55742',
