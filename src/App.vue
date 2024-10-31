@@ -1,9 +1,32 @@
+<template>
+  <div class="container">
+      <template v-for="item in items" key="item">
+        <CategoryComponent :label="item.label" 
+        :imgSrc="item.imgSrc" 
+        :quantity="item.quantity"
+        :bgColor="item.bgColor"
+        :radiusColor="item.radiusColor"
+        />
+      </template>
+  </div>
+
+  <div class="container">
+    <template v-for="item in promotions" key="item">
+      <PromotionComponent :label="item.label" :bgColor="item.bgColor" :imgSrc="item.imgSrc" :buttonColor="item.buttonColor"/>
+    </template>
+  </div>
+  
+
+</template>
+
 <script >
 import CategoryComponent from './components/CategoryComponent.vue';
+import PromotionComponent from './components/PromotionComponent.vue';
 
 export default {
   components: {
-    CategoryComponent
+    CategoryComponent,
+    PromotionComponent
   },
   methods: {
     getQuantity() {
@@ -83,28 +106,35 @@ export default {
           bgColor: '#FFF3FF',
           radiusColor: '#f55742',
         },
+      ],
+      promotions: [
+        {
+          label: 'Everyday Fresh & Clean with Our Products',
+          imgSrc: './src/assets/img/onion.png',
+          bgColor: '#F0E8D5',
+          buttonColor: '#3BB77E',
+        },
+        {
+          label: 'Make your Breakfast Healthy and Easy',
+          imgSrc: './src/assets/img/strawberry.png',
+          bgColor: '#F3E8E8',
+          buttonColor: '#3BB77E',
+        },
+        {
+          label: 'The Best Organic Products Online',
+          imgSrc: './src/assets/img/fruitbasket.png',
+          bgColor: '#E7EAF3',
+          buttonColor: '#FDC040',
+        },
       ]
     }
   }
 }
 </script>
 
-<template>
-  <div class="container">
-      <template v-for="item in items" key="item">
-        <CategoryComponent :label="item.label" 
-        :imgSrc="item.imgSrc" 
-        :quantity="item.quantity"
-        :bgColor="item.bgColor"
-        :radiusColor="item.radiusColor"
-        />
-      </template>
-  </div>
-</template>
-
 <style scoped>
 .container {
-  display: flex;
+  display: inline-flex;
 }
 
 </style>
