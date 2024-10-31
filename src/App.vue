@@ -15,11 +15,74 @@ export default {
       items: [
         {
           label: 'Burger',
-          img: './src/assets/img/burger.png',
+          imgSrc: './src/assets/img/burger.png',
           quantity: this.getQuantity(),
-          bgColor: "background: #F2FCE4",
+          bgColor: "#F2FCE4",
           radiusColor: "#81B13D",
-        }
+        },
+        {
+          label: 'Peach',
+          imgSrc: './src/assets/img/peach.png',
+          quantity: this.getQuantity(),
+          bgColor: '#FFFCEB',
+          radiusColor: '#f58d42'
+        },
+        {
+          label: 'Organic Kiwi',
+          imgSrc: './src/assets/img/kiwi.png',
+          quantity: this.getQuantity(),
+          bgColor: '#F2FCE4',
+          radiusColor: '#81B13D'
+        },
+        {
+          label: 'Red Apple', 
+          imgSrc: './src/assets/img/apple.png' ,
+          quantity: this.getQuantity(),
+          bgColor: '#FEEFEA',
+          radiusColor: '#f55742',
+        },
+        {
+          label: 'Snack' ,
+          imgSrc: './src/assets/img/snack.png' ,
+          quantity: this.getQuantity(),
+          bgColor: '#FFF3EB',
+          radiusColor: '#f55742',
+        },
+        {
+          label: 'Black Plum', 
+          imgSrc: './src/assets/img/plum.png' ,
+          quantity: this.getQuantity(),
+          bgColor: '#FFF3FF',
+          radiusColor: '#AAAAAA',
+        },
+        {
+          label: 'Vegetables' ,
+          imgSrc: './src/assets/img/vegetable.png' ,
+          quantity: this.getQuantity(),
+          bgColor: '#F2FCE4',
+          radiusColor: '#81B13D',
+        },
+        {
+          label: 'Headphone' ,
+          imgSrc: './src/assets/img/headphone.png' ,
+          quantity: this.getQuantity(),
+          bgColor: '#FFFCEB',
+          radiusColor: '#AAAAAA',
+        },
+        {
+          label: 'Snack' ,
+          imgSrc: './src/assets/img/snack.png' ,
+          quantity: this.getQuantity(),
+          bgColor: '#FFF3EB',
+          radiusColor: '#f55742',
+        },
+        {
+          label: 'Orange', 
+          imgSrc: './src/assets/img/orange.png' ,
+          quantity: this.getQuantity(),
+          bgColor: '#FFF3FF',
+          radiusColor: '#f55742',
+        },
       ]
     }
   }
@@ -28,69 +91,15 @@ export default {
 
 <template>
   <div class="container">
-    <CategoryComponent :label="'Burger'" 
-      :imgSrc="'./src/assets/img/burger.png'" 
-      :quantity="getQuantity()"
-      :bgColor="'#F2FCE4'"
-      :radiusColor="'#81B13D'"
-    />
-    <CategoryComponent :label="'Peach'" 
-      :imgSrc="'./src/assets/img/peach.png'" 
-      :quantity="getQuantity()"
-      :bgColor="'#FFFCEB'"
-      :radiusColor="'#f58d42'"
-    />
-    <CategoryComponent :label="'Organic Kiwi'" 
-      :imgSrc="'./src/assets/img/kiwi.png'" 
-      :quantity="getQuantity()"
-      :bgColor="'#ECFFEC'"
-      :radiusColor="'#81B13D'"
-    />
-    <CategoryComponent :label="'Red Apple'" 
-      :imgSrc="'./src/assets/img/apple.png'" 
-      :quantity="getQuantity()"
-      :bgColor="'#FEEFEA'"
-      :radiusColor="'#f55742'"
-    />
-    <CategoryComponent :label="'Snack'" 
-      :imgSrc="'./src/assets/img/snack.png'" 
-      :quantity="getQuantity()"
-      :bgColor="'#FFF3EB'"
-      :radiusColor="'#f55742'"
-    />
-    <CategoryComponent :label="'Black Plum'" 
-      :imgSrc="'./src/assets/img/plum.png'" 
-      :quantity="getQuantity()"
-      :bgColor="'#FFF3FF'"
-      :radiusColor="'#AAAAAA'"
-    />
-    <CategoryComponent :label="'Vegetable'" 
-      :imgSrc="'./src/assets/img/vegetable.png'" 
-      :quantity="getQuantity()"
-      :bgColor="'#F2FCE4'"
-      :radiusColor="'#81B13D'"
-    />
-    <CategoryComponent :label="'Headphone'" 
-      :imgSrc="'./src/assets/img/headphone.png'" 
-      :quantity="getQuantity()"
-      :bgColor="'#FFFCEB'"
-      :radiusColor="'#AAAAAA'"
-    />
-    <CategoryComponent :label="'Cake & Milk'" 
-      :imgSrc="'./src/assets/img/cake.png'" 
-      :quantity="getQuantity()"
-      :bgColor="'#F2FCE4'"
-      :radiusColor="'#81B13D'"
-    />
-    <CategoryComponent :label="'Orange'" 
-      :imgSrc="'./src/assets/img/orange.png'" 
-      :quantity="getQuantity()"
-      :bgColor="'#FFF3FF'"
-      :radiusColor="'#AAAAAA'"
-    />
-
+      <template v-for="item in items" key="item">
+        <CategoryComponent :label="item.label" 
+        :imgSrc="item.imgSrc" 
+        :quantity="item.quantity"
+        :bgColor="item.bgColor"
+        :radiusColor="item.radiusColor"
+        />
+      </template>
   </div>
-  
 </template>
 
 <style scoped>
