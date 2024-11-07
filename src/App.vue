@@ -35,6 +35,8 @@ export default {
   },
   data() {
     return {
+
+      // TP2 : Step 1: Create local variables to represent component data
       items: [
         {
           label: 'Burger',
