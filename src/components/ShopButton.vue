@@ -2,7 +2,7 @@
 export default {
     props: {
         bgColor: String,
-    }
+    },
 }
 </script>
 
@@ -27,6 +27,7 @@ export default {
     border-radius: 4px;
     border: none;
     margin-top: 20px;
+    cursor: pointer;
     
   }
 
