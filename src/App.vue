@@ -1,18 +1,22 @@
 <template>
   <div class="container">
-      <template v-for="item in items" key="item">
-        <CategoryComponent :label="item.label" 
-        :imgSrc="item.imgSrc" 
-        :quantity="item.quantity"
-        :bgColor="item.bgColor"
-        :radiusColor="item.radiusColor"
+      <template v-for="item in categories" key="item">
+        <CategoryComponent :label="item.name" 
+        :imgSrc="item.image" 
+        :quantity="item.productCount"
+        :bgColor="item.color"
         />
       </template>
   </div>
 
   <div class="container">
     <template v-for="item in promotions" key="item">
-      <PromotionComponent :label="item.label" :bgColor="item.bgColor" :imgSrc="item.imgSrc" :buttonColor="item.buttonColor"/>
+      <PromotionComponent 
+      :label="item.title" 
+      :bgColor="item.color" 
+      :imgSrc="item.image" 
+      :buttonColor="item.buttonColor"
+      />
     </template>
   </div>
   
@@ -23,6 +27,8 @@
 import CategoryComponent from './components/CategoryComponent.vue';
 import PromotionComponent from './components/PromotionComponent.vue';
 
+import axios from 'axios';
+
 export default {
   components: {
     CategoryComponent,
@@ -31,13 +37,23 @@ export default {
   methods: {
     getQuantity() {
       return Math.floor(Math.random() * 100)
+    },
+    fetchCategories() {
+      axios.get("http://localhost:3000/api/categories").then(res => {
+        this.categories = res.data;
+      })
+    },
+    fetchPromotions() {
+      axios.get("http://localhost:3000/api/promotions").then(res => {
+        this.promotions = res.data;
+      })
     }
   },
   data() {
     return {
 
       // TP2 : Step 1: Create local variables to represent component data
-      items: [
+      categories: [
         {
           label: 'Burger',
           imgSrc: './src/assets/img/burger.png',
@@ -130,6 +146,10 @@ export default {
         },
       ]
     }
+  },
+  mounted() {
+    this.fetchCategories();
+    this.fetchPromotions();
   }
 }
 </script>
