@@ -20,7 +20,6 @@
     </template>
   </div>
   
-
 </template>
 
 <script >
@@ -51,109 +50,29 @@ export default {
   },
   data() {
     return {
-
-      // TP2 : Step 1: Create local variables to represent component data
-      // categories: [
-      //   {
-      //     label: 'Burger',
-      //     imgSrc: './src/assets/img/burger.png',
-      //     quantity: this.getQuantity(),
-      //     bgColor: "#F2FCE4",
-      //     radiusColor: "#81B13D",
-      //   },
-      //   {
-      //     label: 'Peach',
-      //     imgSrc: './src/assets/img/peach.png',
-      //     quantity: this.getQuantity(),
-      //     bgColor: '#FFFCEB',
-      //     radiusColor: '#f58d42'
-      //   },
-      //   {
-      //     label: 'Organic Kiwi',
-      //     imgSrc: './src/assets/img/kiwi.png',
-      //     quantity: this.getQuantity(),
-      //     bgColor: '#F2FCE4',
-      //     radiusColor: '#81B13D'
-      //   },
-      //   {
-      //     label: 'Red Apple', 
-      //     imgSrc: './src/assets/img/apple.png' ,
-      //     quantity: this.getQuantity(),
-      //     bgColor: '#FEEFEA',
-      //     radiusColor: '#f55742',
-      //   },
-      //   {
-      //     label: 'Snack' ,
-      //     imgSrc: './src/assets/img/snack.png' ,
-      //     quantity: this.getQuantity(),
-      //     bgColor: '#FFF3EB',
-      //     radiusColor: '#f55742',
-      //   },
-      //   {
-      //     label: 'Black Plum', 
-      //     imgSrc: './src/assets/img/plum.png' ,
-      //     quantity: this.getQuantity(),
-      //     bgColor: '#FFF3FF',
-      //     radiusColor: '#AAAAAA',
-      //   },
-      //   {
-      //     label: 'Vegetables' ,
-      //     imgSrc: './src/assets/img/vegetable.png' ,
-      //     quantity: this.getQuantity(),
-      //     bgColor: '#F2FCE4',
-      //     radiusColor: '#81B13D',
-      //   },
-      //   {
-      //     label: 'Headphone' ,
-      //     imgSrc: './src/assets/img/headphone.png' ,
-      //     quantity: this.getQuantity(),
-      //     bgColor: '#FFFCEB',
-      //     radiusColor: '#AAAAAA',
-      //   },
-      //   {
-      //     label: 'Cake & Milk' ,
-      //     imgSrc: './src/assets/img/cake.png' ,
-      //     quantity: this.getQuantity(),
-      //     bgColor: '#FFF3EB',
-      //     radiusColor: '#f55742',
-      //   },
-      //   {
-      //     label: 'Orange', 
-      //     imgSrc: './src/assets/img/orange.png' ,
-      //     quantity: this.getQuantity(),
-      //     bgColor: '#FFF3FF',
-      //     radiusColor: '#f55742',
-      //   },
-      // ],
-      // promotions: [
-      //   {
-      //     label: 'Everyday Fresh & Clean with Our Products',
-      //     imgSrc: './src/assets/img/onion.png',
-      //     bgColor: '#F0E8D5',
-      //     buttonColor: '#3BB77E',
-      //   },
-      //   {
-      //     label: 'Make your Breakfast Healthy and Easy',
-      //     imgSrc: './src/assets/img/strawberry.png',
-      //     bgColor: '#F3E8E8',
-      //     buttonColor: '#3BB77E',
-      //   },
-      //   {
-      //     label: 'The Best Organic Products Online',
-      //     imgSrc: './src/assets/img/fruitbasket.png',
-      //     bgColor: '#E7EAF3',
-      //     buttonColor: '#FDC040',
-      //   },
-      // ]
+      currentGroupName: "Milks & Diaries"
     }
   },
   
   computed: {
     ...mapState(useProductStore, {
-      categories: "categories",
       promotions: "promotions",
       products: "products",
       groups: "groups",
+
+      categories(store) {
+        const cats = store.getCategoriesByGroup(this.currentGroupName)
+        console.log("Categories by group name")
+        console.log(cats)
+        return cats
+      },
+      
+      popularProducts(store) {
+        const products = store.getPopularProducts()
+        console.log("Popular products")
+        console.log(products)
+        return products
+      }
     }),
   },
 
