@@ -28,8 +28,16 @@ import CategoryComponent from './components/CategoryComponent.vue';
 import PromotionComponent from './components/PromotionComponent.vue';
 
 import axios from 'axios';
+import { useProductStore } from './stores/product';
+import { mapState } from 'pinia';
 
 export default {
+  setup() {
+    const store = useProductStore()
+    return {
+      store
+    }
+  },
   components: {
     CategoryComponent,
     PromotionComponent
@@ -39,16 +47,6 @@ export default {
     getQuantity() {
       return Math.floor(Math.random() * 100)
     },
-    fetchCategories() {
-      axios.get("http://localhost:3000/api/categories").then(res => {
-        this.categories = res.data;
-      })
-    },
-    fetchPromotions() {
-      axios.get("http://localhost:3000/api/promotions").then(res => {
-        this.promotions = res.data;
-      })
-    }
     
   },
   data() {
@@ -149,10 +147,22 @@ export default {
       // ]
     }
   },
-  mounted() {
-    this.fetchCategories();
-    this.fetchPromotions();
-  }
+  
+  computed: {
+    ...mapState(useProductStore, {
+      categories: "categories",
+      promotions: "promotions",
+      products: "products",
+      groups: "groups",
+    }),
+  },
+
+  async mounted() {
+    await this.store.fetchCategories()
+    await this.store.fetchPromotions()  
+    await this.store.fetchProducts()
+    await this.store.fetchGroups()
+  }, 
 }
 </script>
 
