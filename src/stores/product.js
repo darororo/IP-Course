@@ -6,27 +6,33 @@ export const useProductStore = defineStore('product', {
          groups: [],
          promotions: [],
          categories: [],
-         products: []
+         products: [],
+         currProductGroup: "All",
     }),
     getters: {
      getCategoriesByGroup(groupName) {
-          return (groupName) => this.categories.find((category) => category.group === groupName)
+          return (groupName) => this.categories.filter((category) => category.group === groupName)
      },
 
-     getProductsByGroup(groupName) {
-          return (groupName) => this.products.find((product) => product.group === groupName)
+     getProductsByGroup() {
+          return () => {
+          
+               if(this.currProductGroup === "All") return this.products
+
+               return this.products.filter((product) => product.group === this.currProductGroup)
+          }
      },
 
      getProductsByCategory(categoryId) {
-          return (categoryId) => this.products.find((product) => product.categoryId === categoryId)
+          console.log("from store")
+          console.log(this.currProductGroup)
+          return (categoryId) => this.products.filter((product) => product.categoryId === categoryId)
 
      },
 
      getPopularProducts() {
           const countPopular = 10;
-          console.log("Getting Popular")
-          const popular = () => this.products.find((product) => product.countSold > countPopular)
-          console.log(popular)
+          const popular = () => this.products.filter((product) => product.countSold > countPopular)
           return popular
      },
 
@@ -47,7 +53,6 @@ export const useProductStore = defineStore('product', {
 
      async fetchProducts() {
           await axios.get("http://localhost:3000/api/products").then(res => {
-          console.log(res.data)
           this.products = res.data;
      })
      },
@@ -56,6 +61,6 @@ export const useProductStore = defineStore('product', {
           await axios.get("http://localhost:3000/api/groups").then(res => {
           this.groups = res.data;
      })
-     }
+     },
     },
   })    
