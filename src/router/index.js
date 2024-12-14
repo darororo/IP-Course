@@ -6,8 +6,20 @@ const router = createRouter({
     routes: [
      {
         path: "/",
+        name: "home",
         component: HomeView
      },
+     {
+        path: "/categories/:categoryId",
+        name: "category",
+        component: () => import("@/views/CategoryView.vue"),
+        props: true,
+     },
+     {
+        path: "/products/:productId",
+        name: "product",
+        component: () => import("@/views/ProductView.vue")
+     }
     ]
 })
 export default router;
