@@ -1,5 +1,7 @@
 <template>
 
+    <ShowCase/>
+
     <MenuComponent 
     :title="'Featured Products'"
     :navList="groups"/>
@@ -58,6 +60,7 @@
   import { useProductStore } from '@/stores/product';
   import { mapState } from 'pinia';
   import ProductComponent from '@/components/ProductComponent.vue';
+import ShowCase from '@/components/ShowCase.vue';
   
   export default {
     setup() {
@@ -71,7 +74,8 @@
       CategoryComponent,
       PromotionComponent,
       ProductComponent,
-      MenuComponent
+      MenuComponent,
+      ShowCase
     },
   
     data() {
