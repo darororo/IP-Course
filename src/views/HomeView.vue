@@ -1,26 +1,28 @@
 <template>
-
     <ShowCase/>
 
     <MenuComponent 
     :title="'Featured Products'"
     :navList="groups"/>
     <div class="container">
-        <template v-for="item in categories" key="item">
+        <template v-for="(item, index) in categories" :key="index">
           <CategoryComponent :label="item.name" 
-          :imgSrc="item.image" 
+          :imgSrc="'http://localhost:3000/' + item.image" 
           :quantity="item.productCount"
           :bgColor="item.color"
+          @click="goToCategory(item.id)"
           />
         </template>
     </div>
   
+    <br>
+    
     <div class="container">
       <template v-for="item in promotions" key="item">
         <PromotionComponent 
         :label="item.title" 
         :bgColor="item.color" 
-        :imgSrc="item.image" 
+        :imgSrc="'http://localhost:3000/' + item.image" 
         :buttonColor="item.buttonColor"
         :price="item.price"
         />
@@ -39,12 +41,13 @@
       <template v-for="item in productsByGroup" key="item">
         <ProductComponent
         :productName="item.name"
-        :imgPath="item.image"
+        :imgPath="'http://localhost:3000/' + parseImages(item.image)[0]" 
         :rating="item.rating"
         :discountPercent="item.promotionAsPercentage"
         :price="item.price"
         :countSold="item.countSold"
         :instock="item.instock"
+        @click="goToProduct(item.id)"
         />
       </template>
     </div>
@@ -60,9 +63,9 @@
   import { useProductStore } from '@/stores/product';
   import { mapState } from 'pinia';
   import ProductComponent from '@/components/ProductComponent.vue';
-import ShowCase from '@/components/ShowCase.vue';
-  
-  export default {
+  import ShowCase from '@/components/ShowCase.vue';
+      
+  export default {    
     setup() {
       const store = useProductStore();
       return {
@@ -96,8 +99,19 @@ import ShowCase from '@/components/ShowCase.vue';
         console.log("Product Group From App.vue")
         console.log(nav);
       },
-  
-  
+
+      goToCategory(id) {
+        this.$router.push(`/categories/${id}`);
+      },
+
+      goToProduct(id) {
+        this.$router.push(`/products/${id}`);
+      },
+
+      parseImages(image) {
+        return JSON.parse(image);
+      },
+
     },
     computed: {
       ...mapState(useProductStore, {
@@ -126,11 +140,19 @@ import ShowCase from '@/components/ShowCase.vue';
           return store.getPopularProducts
         },
   
-      
       }),
   
     },
   
+  
+  
+    async mounted() {
+      await this.store.fetchCategories()
+      await this.store.fetchPromotions()  
+      await this.store.fetchProducts()
+      await this.store.fetchGroups()
+    }, 
+
   
     async mounted() {
       await this.store.fetchCategories()
@@ -153,7 +175,7 @@ import ShowCase from '@/components/ShowCase.vue';
     grid-template-columns: repeat(5, 300px);
     gap: 18px;
   }
-  
+    
   </style>
   
   
