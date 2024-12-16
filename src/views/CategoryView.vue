@@ -30,12 +30,6 @@ export default {
             return this.categories[this.categoryId - 1];
         }
     },
-
-    async mounted() {
-        if(!this.store.categories) {
-            await this.store.fetchCategories();
-        }
-    }
 }
 </script>
 
