@@ -1,6 +1,6 @@
 <template>
 <div class="top-section">
-    <div class="title-container">
+    <div class="title-container" @click="$router.push('/')">
         <AppLogo class="logo"/>
         <div class="text-container">
             <p class="quicksand-regular big-text">Melon</p>
@@ -32,6 +32,7 @@
             :type="item.type" 
             :label="item.label"
             :arrow="item.arrow"
+            @click="$router.push('/categories/1')"
             />
         </template>
     </div>
@@ -140,6 +141,7 @@ export default {
     display: flex;
     align-items: flex-end;
     column-gap: 6px;
+    cursor: pointer;
 }
 
 .text-container {
