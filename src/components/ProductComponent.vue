@@ -3,7 +3,7 @@
   <div v-show="checkPromoStatus" class="promotion-status">
     <p class="lato-regular">{{ showPromoStatus }}</p>
   </div>
-  <img :src="imgPath" alt="">
+  <img :src="imgPath" alt="" @click="$emit('img-clicked')">
   <div class="card-title">
     <p class="lato-regular gray">Hodo Foods</p>
       <h4 class="quicksand-regular label">
@@ -46,9 +46,12 @@
 </template>
 
 <script>
+import { useProductStore } from '@/stores/product';
+import { mapState } from 'pinia';
+
 export default {
   props: {
-   
+    productId: Number,
     promoLabel: {
       type: String,
       default: "hello"
@@ -78,7 +81,6 @@ export default {
 
   computed: {    
     showPromoStatus() {
-
       if(this.promoType === 'discount') {
         this.promoColor = "#3BB77E"
         return "-%" + this.discountPercent
@@ -90,8 +92,13 @@ export default {
       else if(this.promoType === 'sale') {
         this.promoColor  = "#F6C851"
         return "Sale"
-      } 
+      }
     },
+
+    ...mapState(useProductStore, {
+      // store this.amount with its product index
+      countProductAdded: "countProductAdded"
+    }),
 
     discountedPrice() {
       const discounted = this.price * (1 - this.discountPercent / 100) 
@@ -131,13 +138,16 @@ export default {
       this.amount = 1;
       this.addedClicked = true;
     },
-
-    
-
   },
   
   watch: {
     amount(curr) {
+      if(this.productId) {
+        this.countProductAdded[this.productId] = curr;
+      }
+
+      console.log(`${this.productId}: ${this.countProductAdded[this.productId]}`)
+
       if(curr === 0) {
         this.addedClicked = false
       }
@@ -184,7 +194,6 @@ export default {
     border-radius: 10px;
     box-shadow: 20px 20px 40px #18181812;
     position: relative;
-    cursor: pointer;
   }
 
   img {              
@@ -193,6 +202,7 @@ export default {
     align-self: center;
     padding-bottom: 12px;
     margin-top: 40px;
+    cursor: pointer;
   }
 
   .rating {

@@ -40,6 +40,7 @@
     <div class="product-list">
       <template v-for="item in productsByGroup" key="item">
         <ProductComponent
+        :productId="item.id"
         :productName="item.name"
         :imgPath="'http://localhost:3000/' + parseImages(item.image)[0]" 
         :rating="item.rating"
@@ -47,7 +48,7 @@
         :price="item.price"
         :countSold="item.countSold"
         :instock="item.instock"
-        @click="goToProduct(item.id)"
+        @img-clicked="goToProduct(item.id)"
         />
       </template>
     </div>

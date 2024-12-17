@@ -7,11 +7,20 @@ export const useProductStore = defineStore('product', {
          promotions: [],
          categories: [],
          products: [],
+         countProductAdded: {},
          currProductGroup: "All",
     }),
     getters: {
      getCategoriesByGroup(groupName) {
           return (groupName) => this.categories.filter((category) => category.group === groupName)
+     },
+
+     getCategoryById() {
+          return (id) => this.categories.filter((categegory) => categegory.id === id)
+     },
+
+     getProductById() {
+          return (id) => this.products.filter((product) => product.id === id)
      },
 
      getProductsByGroup() {
