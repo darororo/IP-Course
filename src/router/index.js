@@ -6,6 +6,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [ 
+
+    {
+      path: "/",
+      redirect: "/page/1"
+    },
+
     {
       path: "/page/:pageNumber",
       component: Page,
