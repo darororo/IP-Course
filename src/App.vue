@@ -2,7 +2,11 @@
   <div class="body">
       <div class="header-menu">
         <template v-for="x in 3">
-          <router-link :to="`/page/${x}`">Page {{ x }}</router-link>
+          <router-link :to="`/page/${x}`"
+          @click="passMessage(x)"
+          >
+            Page {{ x }}
+          </router-link>
         </template>
       </div>
 
@@ -14,8 +18,14 @@
           </template>
         </div>
 
-        <RouterView/>
+        <div class="message-container">
+          <RouterView/>
 
+          <div class="message-section">
+            <p>Message</p>
+            <input type="text" v-model="message">
+          </div>
+        </div>
     </section>
 
     <footer>
@@ -23,9 +33,39 @@
     </footer>
 
   </div>
-
-
 </template>
+
+<script>
+import { useMessageStore } from './store/messageStore';
+
+export default {
+  setup() {
+    const store = useMessageStore();
+
+    return {
+      store,
+    }
+  },
+  data() {
+    return {
+      message: "",
+    }
+  },
+
+  methods: {
+    passMessage(toPage) {
+      this.store.lastPage = this.curPage;
+      this.store.pages[this.curPage] = this.message; // Map page number to message
+      this.message = "";   // reset message input
+    },
+  },
+  computed: {
+    curPage() {
+      return this.$route.params.pageNumber
+    }
+  }
+}
+</script>
 
 <style scoped>
 a {
@@ -49,12 +89,6 @@ a {
   background-color: palevioletred;
 }
 
-.header-menu > .menu {
-  display: flex;
-  column-gap: 40px;
-  
-}
-
 .header-menu > a {
   border: 1px solid black;
   padding: 4px;
@@ -68,22 +102,40 @@ a {
   display: flex;
   flex-direction: column;
   background-color: palegoldenrod;
+
 }
 
 .section-menu > a {
   border: 1px solid black;
-  padding: 4px;
+  padding: 12px;
+  width: fit-content;
+  background-color: #fff;
 }
 
-.section-menu > a.router-link-active {
+.section-menu >  a.router-link-active {
   border: 1px solid black;
-  padding: 4px;
   background-color: plum;
 }
 
 .content {
   display: flex;
+  flex-direction: row;
   column-gap: 50px;
+}
+
+
+.message-section {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.message-container {
+  width: 60%;
+}
+
+.message-section > input {
+  height: 80%;
 }
 
 footer {
