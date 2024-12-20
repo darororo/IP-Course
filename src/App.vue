@@ -1,17 +1,17 @@
 <template>
   <div class="body">
       <div class="header-menu">
-        <router-link to="/page/1">page 1</router-link>
-        <router-link to="/page/2">page 2</router-link>
-        <router-link to="/page/3">page 3</router-link>
+        <template v-for="x in 3">
+          <router-link :to="`/page/${x}`">Page {{ x }}</router-link>
+        </template>
       </div>
 
 
     <section class="content">
         <div class="section-menu">
-            <router-link :to="`/page/${$route.params.pageNumber}/section/1`">Section 1</router-link>
-            <router-link :to="`/page/${$route.params.pageNumber}/section/2`">Section 2</router-link>
-            <router-link :to="`/page/${$route.params.pageNumber}/section/3`">Section 3</router-link>
+          <template v-for="x in 4">
+            <router-link :to="`/page/${$route.params.pageNumber}/section/${x}`">Section {{ x }}</router-link>
+          </template>
         </div>
 
         <RouterView/>
