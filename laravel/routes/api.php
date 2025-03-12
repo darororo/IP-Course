@@ -12,7 +12,7 @@ Route::get('/user', function (Request $request) {
 Route::controller(CategoryController::class)->prefix('categories')->group(function() {
     Route::get('/', 'getCategories');
     Route::get('/{categoryId}/products', 'getProductsByCategory');
-    Route::post('/', 'createCategories');
+    Route::post('/', 'createCategory');
     Route::get('/{categoryId}', 'getCategory');
     Route::patch('/{categoryId}', 'updateCategory');
     Route::delete('/{categoryId}', 'deleteCategory');
@@ -21,7 +21,7 @@ Route::controller(CategoryController::class)->prefix('categories')->group(functi
 
 Route::controller(ProductController::class)->prefix('products')->group(function() {
     Route::get('/', 'getProducts');
-    Route::post('/', 'createProducts');
+    Route::post('/', 'createProduct');
     Route::get('/{productId}', 'getProduct');
     Route::patch('/{productId}', 'updateProduct');
     Route::delete('/{productId}', 'deleteProduct');
