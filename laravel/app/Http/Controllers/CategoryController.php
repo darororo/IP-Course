@@ -23,4 +23,8 @@ class CategoryController extends Controller
     public function deleteCategory($categoryId) {
         return ["message" => "Deleting 1 category based on given categoryId"];
     }
+
+    public function getProductsByCategory($categoryId) {
+        return ['message' => 'getting a list of products based on categoryId'];
+    }
 }
