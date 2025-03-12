@@ -2,29 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
+
 class CategoryController extends Controller
 {
     public function getCategories() {
-        return ["message" => "GEtting list of categories"];
+        return Category::all();
     }
 
     public function getCategory($categoryId) {
-        return ["message" => "Getting 1 category based on categoryId"];
+        return Category::find($categoryId);
     }
 
-    public function createCategory($categoryId) {
-        return ["message" => "Creating 1 new category"];
+    public function createCategory() {
+        $id = Category::count() + 1;
+        date_default_timezone_set("Asia/Phnom_Penh");
+        $when = date("d/m/Y h:i:sa");
+        $category = Category::create([
+            "name" => "New Category $id $when",
+        ]);
+        $category->save();
+        return $category;
     }
 
     public function updateCategory($categoryId) {
-        return ["message" => "Updating 1 categpry based on given categoryId"];
+        $category = Category::find($categoryId);
+        date_default_timezone_set("Asia/Phnom_Penh");
+        $when = date("d/m/Y h:i:sa");
+        $category->name = "Category $categoryId updated on $when";
+        $category->save();
+
+        return $category;
     }
 
     public function deleteCategory($categoryId) {
-        return ["message" => "Deleting 1 category based on given categoryId"];
+        $category = Category::find($categoryId);
+        $category->delete();
+        return $category;
     }
 
     public function getProductsByCategory($categoryId) {
-        return ['message' => 'getting a list of products based on categoryId'];
+        $products = Product::where('category_id', str($categoryId))->get();
+        return $products;
     }
 }
