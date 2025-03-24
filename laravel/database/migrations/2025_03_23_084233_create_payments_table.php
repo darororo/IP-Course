@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('payment_method', 100);
-            $table->decimal('amount', 2);
+            $table->decimal('amount', 10, 2);
             $table->bigInteger('order_id')->unsigned();
             $table->bigInteger('customer_id')->unsigned();
             $table->timestamp('payment_date');

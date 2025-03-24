@@ -15,8 +15,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->decimal('total_price', 10, 2);
-            $table->timestamp('order_date');
+            $table->bigInteger('customer_id')->unsigned();
+            $table->timestamp('order_date')->nullable();
             $table->timestamps();
+
+            $table->foreign('customer_id')->references('id')->on('customers');
 
         });
     }
