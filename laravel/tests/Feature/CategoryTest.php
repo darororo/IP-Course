@@ -2,32 +2,14 @@
 
 namespace Tests\Unit;
 
+use App\Models\Category;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase
 {
-    /**
-     * Test ID: Category-001
-     * Description: Check if we can access the get all categories api
-     * Precondition: None
-     * Test Steps:
-     *  1. Hit the get all categories api
-     *  2. Check if the response status is 200
-     * Test Data: None
-     * Expected Result: The response status should be 200
-     * Actual Result: reponse returned 200
-     * Status: PASSED
-     * Remark: None
-     *
-     */
-    public function test_if_we_can_access_get_all_categories_api(): void
-    {
-        $response = $this->get('/api/categories');
-        $response->assertStatus(200);
-    }
 
     /**
-     * Test ID: Category-002
+     * Test ID: Category-001
      * Description: Check if we can create a category using the api
      * Precondition: None
      * Test Steps:
@@ -59,6 +41,26 @@ class CategoryTest extends TestCase
             "name" => "test_category_03"
         ]);
         $response->assertStatus(201)->assertJson(['name' => "test_category_03"]);
+    }
+
+    /**
+     * Test ID: Category-002
+     * Description: Check if we can access the get all categories api
+     * Precondition: None
+     * Test Steps:
+     *  1. Hit the get all categories api
+     *  2. Check if the response status is 200
+     * Test Data: None
+     * Expected Result: The response status should be 200
+     * Actual Result: reponse returned 200
+     * Status: PASSED
+     * Remark: None
+     *
+     */
+    public function test_if_we_can_access_get_all_categories_api(): void
+    {
+        $response = $this->get('/api/categories');
+        $response->assertStatus(200)->assertJsonCount(Category::count());
     }
 
      /**
