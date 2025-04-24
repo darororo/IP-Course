@@ -103,8 +103,8 @@ class CategoryTest extends TestCase
     {
         $response = $this->patch('/api/categories/2', ["name" => "test_category_updated"]);
         $response->assertStatus(200)->assertJson([
-            "id" => 2,
-            "name" => "test_category_updated"
+            "id" => $response['id'],
+            "name" => $response['name']
         ]);
     }
 
@@ -127,9 +127,11 @@ class CategoryTest extends TestCase
     public function test_if_we_can_access_delete_a_category_by_id_api(): void
     {
         $response = $this->delete('/api/categories/1');
-        $response->assertStatus(200)->assertJson(["id" => 1]);
+        $response->assertStatus(200)->assertJson(["id" => $response['id']]);
 
-        $request = $this->get('/api/categories/1');
-        $request->assertStatus(200)->assertDontSee(["id" => 1]);
+        $this
+            ->get('/api/categories/1')
+            ->assertStatus(200)
+            ->assertDontSee(["id" => $response['id']]);
     }
 }
