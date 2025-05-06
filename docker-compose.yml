@@ -8,6 +8,7 @@ services:
       - ./php.ini:/usr/local/etc/php/php.ini
     networks:
       - laravel
+    user: "1000"
   webserver:
     image: nginx:latest
     container_name: nginx_server

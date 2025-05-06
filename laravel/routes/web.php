@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
 Route::resource('categories', CategoryController::class);
@@ -19,5 +20,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/upload_file', function () {
+    return view('upload_file');
+});
+
+Route::post('/upload', [UploadController::class, 'upload'])->name('upload');
+
 
 require __DIR__.'/auth.php';
