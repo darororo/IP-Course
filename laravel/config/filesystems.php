@@ -56,9 +56,21 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
+            'throw' => true,
             'report' => false,
         ],
+
+        'minio' => [
+            'driver' => 's3',
+            'host' => env('MINIO_HOST', '127.0.0.1'),
+            'key' => env('MINIO_ACCESS_KEY_ID'),
+            'secret' => env('MINIO_SECRET_ACCESS_KEY'),
+            'region' => env('MINIO_REGION', 'us-east-1'),
+            'bucket' => env('MINIO_BUCKET'),
+            'endpoint' => env('MINIO_ENDPOINT'),
+            'use_path_style_endpoint' => true,
+            'throw' => true,
+        ]
 
     ],
 
