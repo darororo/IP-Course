@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class UploadController extends Controller
@@ -35,5 +37,17 @@ class UploadController extends Controller
             'document' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
         $path = $request->file('document')->store('uploads');
+    }
+
+    public function index() {
+        $images = Storage::disk('public')->allFiles('thumbnails');
+        return view('gallery.index', ['images' => $images]);
+    }
+
+    public function imageView(Request $request, $id) {
+        $baseURL = 'http://localhost:9000/laravel-tp/';
+        $imgPath = Storage::path('uploads/' . $id);
+        $url = $baseURL . $imgPath;
+        return redirect($url);
     }
 }
