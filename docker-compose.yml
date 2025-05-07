@@ -44,6 +44,25 @@ services:
       - "3361:3306"
     networks:
       - laravel
+
+  minio:
+    image: minio/minio
+    container_name: tp09_laravel_minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: password123
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio-data:/data
+    networks:
+      - laravel
+
+volumes:
+  minio-data:
+
 networks:
   laravel:
     driver: bridge
