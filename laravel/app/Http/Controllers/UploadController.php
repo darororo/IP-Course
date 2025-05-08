@@ -29,6 +29,8 @@ class UploadController extends Controller
             $constraint->aspectRatio();
         })->save(storage_path('app/public/' . $thumbnailPath));
 
+        Storage::put($thumbnailPath, $intervention);
+
         return $path;
     }
 
