@@ -14,7 +14,7 @@ class UploadController extends Controller
     {
         $path = $this->storeImage($request);
 
-        return response()->json(['path' => $path], 200);
+        return redirect()->route('gallery.index');
     }
 
     public function storeImage(Request $request)

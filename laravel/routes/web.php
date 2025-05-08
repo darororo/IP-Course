@@ -26,7 +26,7 @@ Route::get('/upload_file', function () {
 });
 
 Route::get('/gallery', [UploadController::class, 'index'])->name('gallery.index');
-Route::get('/gallery/{id}', [UploadController::class, 'imageView'])->name('gallery.index');
+Route::get('/gallery/{id}', [UploadController::class, 'imageView'])->name('gallery.show');
 
 Route::post('/upload', [UploadController::class, 'upload'])->name('upload');
 
