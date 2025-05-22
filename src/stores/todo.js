@@ -1,57 +1,68 @@
+import axios from "axios";
 import { defineStore } from "pinia";
 
 export const useTodoStore = defineStore("todo", {
   state: () => ({
     todos: [],
+    baseUrl: "http://localhost:3100/tasks",
   }),
   getters: {
     countTodos: (state) => state.todos.length,
   },
   actions: {
     async fetchTodos() {
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve([
-            {
-              id: 1,
-              name: "Clean house",
-              description: "cleaning house in detail .....",
-              createdAt: "2024-15-07 07:50:00",
-              completedAt: null,
-            },
-            {
-              id: 2,
-              name: "Do homework",
-              description: "Instruction on doing homework ....",
-              createdAt: "2024-05-07 08:00:00",
-              completedAt: "2024-05-07 08:10:00",
-            },
-          ]);
-        }, 1000);
-      }).then((todos) => (this.todos = todos));
+      try {
+        const response = await axios.get(this.baseUrl);
+        this.todos = response.data;
+      } catch (error) {
+        console.log("Failed to fetch todos:", error);
+      }
     },
-    toggleStatus(id) {
+    async toggleStatus(id) {
       const foundIndex = this.todos.findIndex((t) => t.id == id);
+      const doneEndPoint = `${this.baseUrl}/${id}/done`;
+      const pendingEndPoint = `${this.baseUrl}/${id}/pending`;
       if (foundIndex >= 0) {
         if (this.todos[foundIndex].completedAt != null) {
-          this.todos[foundIndex].completedAt = null;
+          try {
+            await axios.patch(pendingEndPoint, { completedAt: null });
+            this.todos[foundIndex].completedAt = null;
+          } catch (error) {
+            console.log(error);
+          }
         } else {
-          this.todos[foundIndex].completedAt = new Date().toISOString();
+          try {
+            const date = new Date().toISOString();
+            await axios.patch(doneEndPoint, { completedAt: date });
+            this.todos[foundIndex].completedAt = date;
+          } catch (error) {
+            console.log(error);
+          }
         }
       }
     },
-    addTodo(todo) {
-      this.todos.push({
+    async addTodo(todo) {
+      const newTodo = {
         id: this.todos.length + 1,
-        name: todo,
+        name: todo.replace(/\r?\n|\r/, ""),
         description: "description",
         createdAt: new Date().toISOString(),
         completedAt: null,
-      });
-      this.todos = JSON.parse(JSON.stringify(this.todos));
+      };
+      try {
+        await axios.post(this.baseUrl, newTodo);
+        this.todos.push(newTodo);
+      } catch (error) {
+        console.log(error);
+      }
+
+      // this.todos = JSON.parse(JSON.stringify(this.todos));
     },
-    clearAll() {
-      this.todos = [];
+    async clearAll() {
+      try {
+        await axios.delete(`${this.baseUrl}`);
+        this.todos = [];
+      } catch (error) {}
     },
   },
 });
