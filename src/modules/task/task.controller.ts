@@ -6,14 +6,17 @@ import {
   Param,
   Patch,
   Post,
+  UseFilters,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { HttpExceptionFilter } from 'src/filters/ http-exception.filter';
 
 @Controller('tasks')
+@UseFilters(new HttpExceptionFilter())
 export class TasksController {
   constructor(private readonly taskService: TaskService) {}
 
