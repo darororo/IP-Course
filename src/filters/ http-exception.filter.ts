@@ -16,6 +16,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     response.status(status).json({
       statusCode: status,
+      message: 'Resource Not Found',
       timestamp: new Date().toISOString(),
       path: request.url,
     });
