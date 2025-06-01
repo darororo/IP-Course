@@ -14,6 +14,7 @@ import { Task } from './modules/task/task.entity';
       database: 'todo.sqlite',
       entities: [User, Task],
       synchronize: true,
+      dropSchema: false,
     }),
     UserModule,
     TaskModule,

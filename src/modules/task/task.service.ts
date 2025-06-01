@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Injectable()
@@ -11,8 +11,14 @@ export class TaskService {
     @InjectRepository(Task) private readonly taskRepo: Repository<Task>,
   ) {}
 
-  getTask(id: number) {
-    return this.taskRepo.findOne({ where: { id } });
+  async getTask(id: number) {
+    const task = await this.taskRepo.findOne({ where: { id } });
+
+    if (!task) {
+      throw new NotFoundException(`Task with id ${id} not found`);
+    }
+
+    return task;
   }
 
   getAllTasks() {
@@ -44,16 +50,10 @@ export class TaskService {
   }
 
   async deleteAllTasks() {
-    // const tasks = await this.taskRepo.find();
-    // const ids = tasks.map((t) => t.id);
-    // console.log(ids);
-
-    // await this.taskRepo.softDelete({ id: In(ids) });
-
     await this.taskRepo
       .createQueryBuilder()
       .softDelete()
-      .where('1=1') // targets all rows
+      .where('true') // targets all rows
       .execute();
 
     return { message: 'all tasks deleted' };
