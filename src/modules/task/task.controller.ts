@@ -16,7 +16,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { HttpExceptionFilter } from 'src/filters/ http-exception.filter';
 
 @Controller('tasks')
-@UseFilters(new HttpExceptionFilter())
+// @UseFilters(new HttpExceptionFilter())
 export class TasksController {
   constructor(private readonly taskService: TaskService) {}
 
@@ -34,6 +34,11 @@ export class TasksController {
   @UsePipes(new ValidationPipe({ whitelist: true }))
   createTask(@Body() body: CreateTaskDto) {
     return this.taskService.createTask(body);
+  }
+
+  @Post('/:id/assign-user/:userId')
+  assignUser(@Param('id') id: number, @Param('userId') userId: number) {
+    return this.taskService.assignUser(id, userId);
   }
 
   @Patch('/:id')

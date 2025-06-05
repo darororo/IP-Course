@@ -4,11 +4,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
 import { Repository } from 'typeorm';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class TaskService {
   constructor(
     @InjectRepository(Task) private readonly taskRepo: Repository<Task>,
+    private userService: UserService,
   ) {}
 
   async getTask(id: number) {
@@ -33,6 +35,16 @@ export class TaskService {
   async updateTask(id: number, body: UpdateTaskDto) {
     await this.taskRepo.update(id, body);
     return this.getTask(id);
+  }
+
+  async assignUser(id: number, userId: number) {
+    const user = await this.userService.findOne(userId);
+
+    const task = await this.getTask(id);
+
+    task.user = user;
+
+    return this.taskRepo.save(task);
   }
 
   async markDone(id: number) {
