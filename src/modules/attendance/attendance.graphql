@@ -1,0 +1,24 @@
+type Attendance {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateAttendanceInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateAttendanceInput {
+  id: Int!
+}
+
+type Query {
+  attendance: [Attendance]!
+  attendance(id: Int!): Attendance
+}
+
+type Mutation {
+  createAttendance(createAttendanceInput: CreateAttendanceInput!): Attendance!
+  updateAttendance(updateAttendanceInput: UpdateAttendanceInput!): Attendance!
+  removeAttendance(id: Int!): Attendance
+}
