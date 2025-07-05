@@ -10,10 +10,6 @@ input EnrollStudentInput {
   class: String!
 }
 
-input RemoveStudentInput {
-  id: Int!
-}
-
 input UpdateStudentInput {
   id: Int!
   name: String
@@ -30,5 +26,5 @@ type Query {
 type Mutation {
   enrollStudent(input: EnrollStudentInput!): Student!
   updateStudent(input: UpdateStudentInput!): Student!
-  removeStudent(input: RemoveStudentInput): Student
+  removeStudent(id: Int!): Student
 }

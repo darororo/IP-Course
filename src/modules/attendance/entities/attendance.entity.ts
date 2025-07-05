@@ -1,1 +1,6 @@
-export class Attendance {}
+export class Attendance {
+  session: string;
+  marker: string;
+  status: string;
+  studentId: number;
+}

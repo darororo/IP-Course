@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { EnrollStudentInput } from './dto/enroll-student.input';
 import { UpdateStudentInput } from './dto/update-student.input';
 
@@ -31,23 +31,49 @@ export class StudentService {
     },
   ];
 
-  enroll(enrollStudentInput: EnrollStudentInput) {
-    return 'This action adds a new student';
+  enroll(input: EnrollStudentInput) {
+    const lastId = this.students.length + 1;
+    const idCard = input.name.toLowerCase() + '123';
+
+    const targetClass = this.students.filter((s) => s.class == input.class);
+    const existingStu = targetClass.find((s) => s.idCard == idCard);
+    if (existingStu)
+      throw new HttpException('Student exists', HttpStatus.BAD_REQUEST);
+
+    const student = { ...input, id: lastId, idCard };
+
+    this.students.push(student);
+    return student;
   }
 
   findAll() {
-    return `This action returns all student`;
+    return this.students;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} student`;
+    return this.students.find((s) => s.id === id);
   }
 
-  update(id: number, updateStudentInput: UpdateStudentInput) {
-    return `This action updates a #${id} student`;
+  findByClass(name: string) {
+    return this.students.filter((s) => s.class === name);
+  }
+
+  update(input: UpdateStudentInput) {
+    let student = this.students.find((s) => s.id === input.id);
+    if (student) {
+      const index = this.students.indexOf(student);
+      student = { ...student, ...input };
+      this.students[index] = student;
+    }
+    return student;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} student`;
+    const index = this.students.findIndex((s) => s.id === id);
+    if (index === -1) return;
+    const student = this.students[index];
+    this.students.splice(index, 1);
+
+    return student;
   }
 }

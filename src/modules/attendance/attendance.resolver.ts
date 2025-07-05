@@ -8,11 +8,11 @@ export class AttendanceResolver {
   constructor(private readonly attendanceService: AttendanceService) {}
 
   @Mutation('createAttendance')
-  create(@Args('createAttendanceInput') createAttendanceInput: CreateAttendanceInput) {
+  create(@Args('input') createAttendanceInput: CreateAttendanceInput) {
     return this.attendanceService.create(createAttendanceInput);
   }
 
-  @Query('attendance')
+  @Query('attendances')
   findAll() {
     return this.attendanceService.findAll();
   }
@@ -22,9 +22,19 @@ export class AttendanceResolver {
     return this.attendanceService.findOne(id);
   }
 
+  @Query('getAttendanceByStudent')
+  getAttendanceByStudent(@Args('studentId') id: number) {
+    return this.attendanceService.getAttendanceByStudentId(id);
+  }
+
+  @Query('getAttendanceByClass')
+  getAttendanceByClass(@Args('session') session: string) {
+    return this.attendanceService.getAttendanceByClass(session);
+  }
+
   @Mutation('updateAttendance')
-  update(@Args('updateAttendanceInput') updateAttendanceInput: UpdateAttendanceInput) {
-    return this.attendanceService.update(updateAttendanceInput.id, updateAttendanceInput);
+  update(@Args('input') updateAttendanceInput: UpdateAttendanceInput) {
+    return this.attendanceService.update(updateAttendanceInput);
   }
 
   @Mutation('removeAttendance')
